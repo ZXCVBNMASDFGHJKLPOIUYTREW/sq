@@ -1,0 +1,58 @@
+Create the following database schema:
+	BOOK (book_id, author, topic, price)
+	BOOKSTORE (store_id, city, qtysold)
+	STOCK (store_id, book_id, qty_in_stock)
+2. Give the details of the book with stock quantity greater than 35.
+3. List the book information in descending order of price.
+4. Find the book whose author name starts with the letter ‘S’.
+5. Implement the default constraint for city 
+
+
+Create the database schema:
+
+CREATE TABLE BOOK (
+    book_id INT PRIMARY KEY,
+    author VARCHAR(100),
+    topic VARCHAR(100),
+    price DECIMAL(10, 2)
+);
+
+CREATE TABLE BOOKSTORE (
+    store_id INT PRIMARY KEY,
+    city VARCHAR(100),
+    qtysold INT
+);
+
+CREATE TABLE STOCK (
+    store_id INT,
+    book_id INT,
+    qty_in_stock INT,
+    FOREIGN KEY (store_id) REFERENCES BOOKSTORE(store_id),
+    FOREIGN KEY (book_id) REFERENCES BOOK(book_id)
+);
+
+
+Display the details of the book with stock quantity greater than 35:
+
+SELECT BOOK.*
+FROM BOOK
+INNER JOIN STOCK ON BOOK.book_id = STOCK.book_id
+WHERE STOCK.qty_in_stock > 35;
+
+
+List the book information in descending order of price:
+
+SELECT * FROM BOOK
+ORDER BY price DESC;
+
+
+Find the book whose author name starts with the letter ‘S’:
+
+SELECT * FROM BOOK
+WHERE author LIKE 'S%';
+
+
+Implement the default constraint for city:
+
+ALTER TABLE BOOKSTORE
+ALTER COLUMN city SET DEFAULT 'NY';

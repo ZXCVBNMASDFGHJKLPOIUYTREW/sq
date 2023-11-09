@@ -1,0 +1,56 @@
+1.  create a user and grant all permissions to the user.
+2.Create the following database schema:
+	STUDENT (stu_code, name, subject, prof_code)
+3. Insert values into the table and use commit.
+4.Add save point after insertion of records and verify save point.
+5. Delete any three records in the department table and use rollback.
+6. Add constraint primary key and foreign key to the table.
+ 
+
+1).To create a user and grant all permissions to the user, you can use the following SQL statements:
+
+CREATE USER myuser WITH PASSWORD 'mypassword';
+GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
+
+
+2).To create the following database schema, you can use the following SQL statements:
+
+CREATE TABLE STUDENT (
+    stu_code INT PRIMARY KEY,
+    name VARCHAR(100),
+    subject VARCHAR(100),
+    prof_code INT,
+    FOREIGN KEY (prof_code) REFERENCES PROFESSOR(prof_code)
+);
+
+
+3).To insert values into the table and use commit, you can use the following SQL statements:
+
+INSERT INTO STUDENT (stu_code, name, subject, prof_code)
+VALUES (1, 'John', 'Math', 101);
+
+COMMIT;
+
+
+4).To add a save point after insertion of records and verify the save point, you can use the following SQL statements:
+
+SAVEPOINT mysavepoint;
+
+-- To verify the save point
+ROLLBACK TO SAVEPOINT mysavepoint;
+
+
+5).To delete any three records in the department table and use rollback, you can use the following SQL statements:
+
+DELETE FROM DEPARTMENT WHERE department_id IN (1, 2, 3);
+
+ROLLBACK;
+
+
+6).To add constraint primary key and foreign key to the table, you can use the following SQL statements:
+
+ALTER TABLE STUDENT
+ADD CONSTRAINT student_pk PRIMARY KEY (stu_code);
+
+ALTER TABLE STUDENT
+ADD CONSTRAINT student_fk FOREIGN KEY (prof_code) REFERENCES PROFESSOR(prof_code);

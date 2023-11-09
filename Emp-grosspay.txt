@@ -1,0 +1,75 @@
+1. Create an Emp table with the following fields:(EmpNo, EmpName, Job,Basic, DA, HRA,PF,
+GrossPay, NetPay)
+(Calculate DA as 30% of Basic and HRA as 40% of Basic)
+2. Insert Five Records and calculate GrossPay and NetPay.
+3.  Display the employees whose Basic is lowest in each department .
+4.  If NetPay is less than <Rs. 10,000 add Rs. 1200 as special allowances .
+5. Display the employees whose GrossPay lies between 10,000 & 20,000
+6.  Display all the employees who earn maximum salary .
+
+Creating an Emp table with the specified fields and calculating DA and HRA:
+
+CREATE TABLE Emp(
+EmpNo INT PRIMARY KEY,
+EmpName VARCHAR(100),
+Job VARCHAR(100),
+Basic DECIMAL(10,2),
+DA DECIMAL(10,2),
+HRA DECIMAL(10,2),
+PF DECIMAL(10,2),
+GrossPay DECIMAL(10,2),
+NetPay DECIMAL(10,2)
+);
+
+
+Inserting five records and calculating GrossPay and NetPay:
+
+INSERT INTO Emp(EmpNo, EmpName, Job, Basic, DA, HRA, PF, GrossPay, NetPay)
+VALUES(1, 'John Doe', 'Manager', 10000, 0, 0, 1200, 0, 0);
+
+INSERT INTO Emp(EmpNo, EmpName, Job, Basic, DA, HRA, PF, GrossPay, NetPay)
+VALUES(2, 'Jane Doe', 'Analyst', 5000, 0, 0, 500, 0, 0);
+
+INSERT INTO Emp(EmpNo, EmpName, Job, Basic, DA, HRA, PF, GrossPay, NetPay)
+VALUES(3, 'Mary Johnson', 'Engineer', 20000, 0, 0, 2400, 0, 0);
+
+INSERT INTO Emp(EmpNo, EmpName, Job, Basic, DA, HRA, PF, GrossPay, NetPay)
+VALUES(4, 'Michael Brown', 'Developer', 30000, 0, 0, 3600, 0, 0);
+
+INSERT INTO Emp(EmpNo, EmpName, Job, Basic, DA, HRA, PF, GrossPay, NetPay)
+VALUES(5, 'Robert Smith', 'QA', 15000, 0, 0, 1800, 0, 0);
+
+
+Displaying the employees whose Basic is lowest in each department:
+
+SELECT E1.*
+FROM Emp E1
+WHERE E1.Basic = (
+SELECT MIN(E2.Basic)
+FROM Emp E2
+WHERE E1.Job = E2.Job
+);
+
+
+If NetPay is less than Rs. 10,000, adding Rs. 1200 as special allowances:
+
+UPDATE Emp
+SET NetPay = NetPay + 1200
+WHERE NetPay < 10000;
+
+
+Displaying the employees whose GrossPay lies between 10,000 & 20,000:
+
+SELECT *
+FROM Emp
+WHERE GrossPay BETWEEN 10000 AND 20000;
+
+
+Displaying all the employees who earn maximum salary:
+
+SELECT E1.*
+FROM Emp E1
+WHERE E1.GrossPay = (
+SELECT MAX(E2.GrossPay)
+FROM Emp E2
+);

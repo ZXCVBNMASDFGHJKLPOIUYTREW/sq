@@ -1,0 +1,74 @@
+
+
+Create the two tables as shown below with the given constraints: (for questions 21 to 30)
+Table name: Employee Tablename: Department
+Constraints: Eid is Primary key and DeptId is foreign key Constraints:DeptId Primary key
+Salary should not be less than 10000 and Dname is NOT NULL.
+ Write sql query to display all the employees who earn more than average salary of all the
+employees in the company.
+Write a query to display the fields Eid, Ename and Dname.
+Write a query to sort the employee table in the descending order of salaries.
+Write a query to list all the job designations in the employee table without repetitions.
+Write query to display all the employee details Department wise and in the ascending order
+of their salaries.
+Write a query to display all the clerks in DeptId D2
+
+
+Creating the Employee table:
+CREATE TABLE Employee (
+    Eid INT PRIMARY KEY,
+    Ename VARCHAR(100) NOT NULL,
+    Salary INT CHECK(Salary >= 10000),
+    DeptId INT,
+    FOREIGN KEY (DeptId) REFERENCES Department(DeptId)
+);
+
+
+Creating the Department table:
+
+CREATE TABLE Department (
+    DeptId INT PRIMARY KEY,
+    Dname VARCHAR(100) NOT NULL
+);
+
+
+Displaying all the employees who earn more than the average salary of all the employees in the company:
+
+SELECT *
+FROM Employee e
+WHERE e.Salary > (SELECT AVG(Salary) FROM Employee);
+
+
+Displaying the fields Eid, Ename, and Dname:
+
+SELECT e.Eid, e.Ename, d.Dname
+FROM Employee e
+JOIN Department d ON e.DeptId = d.DeptId;
+
+
+Sorting the employee table in the descending order of salaries:
+
+SELECT *
+FROM Employee
+ORDER BY Salary DESC;
+
+
+Listing all the job designations in the employee table without repetitions:
+SELECT DISTINCT Title
+FROM Employee;
+
+
+Displaying all the employee details Department wise and in the ascending order of their salaries:
+
+SELECT e.Eid, e.Ename, d.Dname, e.Salary
+FROM Employee e
+JOIN Department d ON e.DeptId = d.DeptId
+ORDER BY d.Dname ASC, e.Salary ASC;
+
+
+Displaying all the clerks in DeptId D2:
+
+SELECT *
+FROM Employee
+WHERE Title = 'Clerk' AND DeptId = 'D2';
+No

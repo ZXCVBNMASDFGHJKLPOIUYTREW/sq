@@ -1,0 +1,63 @@
+Creating the database schema:
+
+CREATE TABLE CLIENT (
+    client_no INT PRIMARY KEY,
+    name VARCHAR(100),
+    city VARCHAR(100),
+    balance_due DECIMAL(10, 2)
+);
+
+CREATE TABLE PRODUCT (
+    prod_no INT PRIMARY KEY,
+    profit_percentage DECIMAL(5, 2),
+    qty_on_hand INT,
+    selling_price DECIMAL(10, 2)
+);
+
+CREATE TABLE PURCHASE (
+    client_no INT,
+    prod_no INT,
+    qty INT,
+    FOREIGN KEY (client_no) REFERENCES CLIENT(client_no),
+    FOREIGN KEY (prod_no) REFERENCES PRODUCT(prod_no)
+);
+
+
+Finding the clients who have purchased a product with quantity greater than 15:
+
+1. Create the following database schema:
+	CLIENT (client_no, name, city, balance_due)
+	PRODUCT (prod_no, profit_percentage, qty_on_hand, selling_price) 
+	PURCHASE (client_no, prod_no, qty)
+2. Find the clients who have purchased a product with quantity greater than 15.
+3. Find all clients who live in ‘Panvel’.
+4. Find all products where profit percentage is greater than 50.
+5. Create a view that displays client name and number of products purchased by him.
+
+
+SELECT DISTINCT C.client_no, C.name
+FROM CLIENT C
+JOIN PURCHASE P ON C.client_no = P.client_no
+JOIN PRODUCT PR ON P.prod_no = PR.prod_no
+WHERE P.qty > 15;
+
+
+Finding all clients who live in 'Panvel':
+
+SELECT * FROM CLIENT
+WHERE city = 'Panvel';
+
+
+Finding all products where profit percentage is greater than 50:
+
+SELECT * FROM PRODUCT
+WHERE profit_percentage > 50;
+
+
+Creating a view that displays client name and number of products purchased by him:
+
+CREATE VIEW purchase_summary AS
+SELECT C.name, COUNT(P.prod_no) as num_products_purchased
+FROM CLIENT C
+JOIN PURCHASE P ON C.client_no = P.client_no
+GROUP BY C.client_no;

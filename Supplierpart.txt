@@ -1,0 +1,44 @@
+
+1. Create the following database schema:
+	SUPPLIER (supplier_id, name, city)
+	PART (part_no, part_name, supplier_id, color, cost)
+2. Find the suppliers who live in the same city.
+3. Display details of the part that has maximum cost.
+4. Display all part details belonging to particular supplier.
+
+
+Create the following database schema:
+
+CREATE TABLE SUPPLIER (
+    supplier_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    city VARCHAR(100)
+);
+
+CREATE TABLE PART (
+    part_no INT PRIMARY KEY,
+    part_name VARCHAR(100),
+    supplier_id INT,
+    color VARCHAR(100),
+    cost DECIMAL(10, 2),
+    FOREIGN KEY (supplier_id) REFERENCES SUPPLIER(supplier_id)
+);
+
+
+//Find the suppliers who live in the same city.
+
+SELECT S1.name, S2.name, S1.city
+FROM SUPPLIER S1
+JOIN SUPPLIER S2 ON S1.city = S2.city AND S1.supplier_id < S2.supplier_id;
+
+
+Display details of the part that has maximum cost.
+
+SELECT * FROM PART
+WHERE cost = (SELECT MAX(cost) FROM PART);
+
+
+Display all part details belonging to particular supplier.
+
+SELECT * FROM PART
+WHERE supplier_id = :supplier_id;

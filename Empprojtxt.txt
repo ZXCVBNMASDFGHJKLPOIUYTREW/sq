@@ -1,0 +1,44 @@
+Create the tables emp (eno, ename, bdate, title, salary, dno) 
+ proj (pno, pname, budget, dno) 
+dept (dno, dname, mgreno) 
+workson (eno, pno, resp, hours)
+2.Write an SQL query that returns the project number and name for projects with a
+budget greater than $100,000.
+3. Write an SQL query that returns all works on records where hours worked is less than
+10 and the responsibility is 'Manager'.
+4.Write an SQL query that returns the employees (number and name only) who have a
+title of 'EE' or 'SA' and make more than $35,000.
+Write an SQL query that returns the employee name, department name, and employee
+Title.
+
+Query:
+
+SELECT pno, pname
+FROM proj
+WHERE budget > 100000;
+
+Query:
+
+SELECT eno, ename, title
+FROM emp e
+JOIN workson w ON e.eno = w.eno
+WHERE w.hours < 10 AND w.resp = 'Manager';
+
+Query:
+SELECT eno, ename, title
+FROM emp
+WHERE (title = 'EE' OR title = 'SA') AND salary > 35000;
+
+
+Query:
+SELECT e.eno, e.ename, d.dname, e.title
+FROM emp e
+JOIN dept d ON e.dno = d.dno;
+
+
+Drop Unique Constraints:
+
+ALTER TABLE emp
+DROP CONSTRAINT eno_unique,
+DROP CONSTRAINT ename_unique;
+This will drop t

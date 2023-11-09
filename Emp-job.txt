@@ -1,0 +1,45 @@
+To create a table called EMP with the given structure and constraints, you can use the following SQL code:
+CREATE TABLE EMP(
+   EMPNO NUMBER(6) NOT NULL,
+   ENAME VARCHAR2(20) NOT NULL,
+   JOB VARCHAR2(10) NOT NULL,
+   DEPTNO NUMBER(3) NOT NULL,
+   SAL NUMBER(7,2),
+   CHECK (EMPNO > 100),
+   PRIMARY KEY (EMPNO)
+);
+
+
+To insert 5 records into the EMP table, you can use the following SQL code:
+
+INSERT INTO EMP(EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES(110, 'John Doe', 'Engineer', 20, 75000);
+
+INSERT INTO EMP(EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES(120, 'Jane Smith', 'Engineer', 30, 78000);
+
+INSERT INTO EMP(EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES(130, 'Tom Johnson', 'Engineer', 40, 81000);
+
+INSERT INTO EMP(EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES(140, 'Emily Brown', 'Engineer', 50, 84000);
+
+INSERT INTO EMP(EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES(150, 'Dave Jones', 'Engineer', 60, 87000);
+
+
+To add a new column of DOB with the default value of SYSDATE, you can use the following SQL code:
+
+ALTER TABLE EMP
+ADD (DOB DATE DEFAULT SYSDATE);
+
+
+To drop the unique constraints, you can use the following SQL code:
+
+ALTER TABLE EMP
+DROP UNIQUE (EMPNO, ENAME);
+
+To add the constraints back, you can use the following SQL code:
+ALTER TABLE EMP
+ADD CONSTRAINT EMP_UNIQUE UNIQUE (EMPNO, ENAME);
+Ple

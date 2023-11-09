@@ -1,0 +1,64 @@
+1.Create the following database schema:
+       EMPLOYEE   (Emp_no, E_name, E_address, E_ph_no, Dept_no, Dept_name,Job_id, Designation , Salary)
+2. List the employees in the ascending order of Designations of those joined after 1981.
+3. List the employees who are either ‘CLERK’ or ‘ANALYST’ 
+4. List the Enames those are starting with ‘S’ .
+5.  Display all the details of the employee whose salary is more than the Sal of any IT PROFF
+
+.Create the following database schema:
+
+
+CREATE TABLE DEPARTMENT (
+    Dept_no INT PRIMARY KEY,
+    Dept_name VARCHAR(100)
+);
+
+CREATE TABLE JOB (
+    Job_id INT PRIMARY KEY,
+    Job_title VARCHAR(100),
+    Min_salary INT,
+    Max_salary INT
+);
+
+CREATE TABLE EMPLOYEE (
+    Emp_no INT PRIMARY KEY,
+    E_name VARCHAR(100),
+    E_address VARCHAR(200),
+    E_ph_no VARCHAR(20),
+    Dept_no INT,
+    Dept_name VARCHAR(100),
+    Job_id INT,
+    Designation VARCHAR(100),
+    Salary INT,
+    Joined_year INT,
+    FOREIGN KEY (Dept_no) REFERENCES DEPARTMENT(Dept_no),
+    FOREIGN KEY (Job_id) REFERENCES JOB(Job_id)
+);
+
+
+List the employees in the ascending order of Designations of those joined after 1981.
+
+SELECT * 
+FROM EMPLOYEE 
+WHERE Joined_year > 1981 
+ORDER BY Designation ASC;
+
+
+List the employees who are either ‘CLERK’ or ‘ANALYST’
+SELECT * 
+FROM EMPLOYEE 
+WHERE Designation IN ('CLERK', 'ANALYST');
+
+
+List the Enames those are starting with ‘S’ .
+
+SELECT * 
+FROM EMPLOYEE 
+WHERE E_name LIKE 'S%';
+
+
+Display all the details of the employee whose salary is more than the Sal of any IT PROFF
+SELECT * 
+FROM EMPLOYEE 
+WHERE Salary > (SELECT MAX(Salary) FROM EMPLOYEE WHERE Designation = 'IT PROFF');
+Make sure to

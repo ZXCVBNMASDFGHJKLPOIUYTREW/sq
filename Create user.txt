@@ -1,0 +1,22 @@
+
+1. Create user and implement the following commands on relation (Emp and Dept).
+ 2. Develop a query to grant all privileges of employees table into departments table.
+ 3. Develop a query to grant some privileges of employees table into departments table. 
+4. Develop a query to revoke all privileges of employees table from departments table. 
+5. Develop a query to revoke some privileges of employees table from departments table.  
+
+--Step 1: Creating a user and granting the required privileges.
+CREATE USER new_user WITH PASSWORD 'new_user_password';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO new_user;
+
+--Step 2: Granting all privileges of employees table into departments table.
+GRANT SELECT, INSERT, UPDATE, DELETE ON EMP TO DEPT;
+
+--Step 3: Granting some privileges of employees table into departments table.
+GRANT SELECT, UPDATE ON EMP TO DEPT;
+
+--Step 4: Revoking all privileges of employees table from departments table.
+REVOKE SELECT, INSERT, UPDATE, DELETE ON EMP FROM DEPT;
+
+--Step 5: Revoking some privileges of employees table from departments table.
+REVOKE SELECT, UPDATE ON EMP FROM DEPT;
