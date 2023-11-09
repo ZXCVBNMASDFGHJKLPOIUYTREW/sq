@@ -1,0 +1,63 @@
+1.Create the following database schema:
+	STUDENT (stu_code, name, subject, prof_code)
+	PROFESSOR (prof_code, prof_name, qualification, experience, salary)
+2. Display name of professors who are either ME or MTech and with at least 8 years of experience.
+3. creates a row level trigger for the PROFESSOR table that would fire for INSERT or UPDATE or DELETE operations performed on the PROFESSOR table. This trigger will display the salary difference between the old values and new values
+4.  Find number of professors who teaches course ‘Computer Programming’.
+
+
+Create the following database schema:
+
+CREATE TABLE STUDENT (
+    stu_code INT PRIMARY KEY,
+    name VARCHAR(100),
+    subject VARCHAR(100),
+    prof_code INT,
+    FOREIGN KEY (prof_code) REFERENCES PROFESSOR(prof_code)
+);
+
+CREATE TABLE PROFESSOR (
+    prof_code INT PRIMARY KEY,
+    prof_name VARCHAR(100),
+    qualification VARCHAR(100),
+    experience INT,
+    salary INT
+);
+
+
+Display name of professors who are either ME or MTech and with at least 8 years of experience.
+
+SELECT prof_name 
+FROM PROFESSOR 
+WHERE (qualification = 'ME' OR qualification = 'MTech') AND experience >= 8;
+
+
+Create a row level trigger for the PROFESSOR table that would fire for INSERT or UPDATE or DELETE operations performed on the PROFESSOR table. This trigger will display the salary difference between the old values and new values.
+
+CREATE OR REPLACE TRIGGER salary_trigger
+AFTER INSERT OR UPDATE OR DELETE ON PROFESSOR
+FOR EACH ROW
+DECLARE
+    old_salary INTEGER;
+    new_salary INTEGER;
+BEGIN
+    IF INSERTING THEN
+        new_salary := :NEW.salary;
+        DBMS_OUTPUT.PUT_LINE('New professor's salary: ' || new_salary);
+    ELSIF UPDATING THEN
+        old_salary := :OLD.salary;
+        new_salary := :NEW.salary;
+        DBMS_OUTPUT.PUT_LINE('Salary difference: ' || (new_salary - old_salary));
+    ELSIF DELETING THEN
+        old_salary := :OLD.salary;
+        DBMS_OUTPUT.PUT_LINE('Deleted professor's salary: ' || old_salary);
+    END IF;
+END;
+
+
+Find number of professors who teaches course ‘Computer Programming’.
+
+SELECT COUNT(*) 
+FROM STUDENT S 
+JOIN PROFESSOR P ON S.prof_code = P.prof_code 
+WHERE S.subject = 'Computer Programming';

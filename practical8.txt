@@ -1,0 +1,41 @@
+1. Create the following database schema:
+	STUDENT (stu_code, name, subject, prof_code)
+	PROFESSOR (prof_code, prof_name, qualification, experience)
+2. Display details of professors who are either ME or MTech and with at least 8 years of experience.
+3. Count number of students appearing for the subject ‘DBMS’.
+4. Find the professor who teaches course ‘Computer Programming’.
+
+Create the following database schema:
+
+CREATE TABLE STUDENT (
+    stu_code INT PRIMARY KEY,
+    name VARCHAR(100),
+    subject VARCHAR(100),
+    prof_code INT
+);
+
+CREATE TABLE PROFESSOR (
+    prof_code INT PRIMARY KEY,
+    prof_name VARCHAR(100),
+    qualification VARCHAR(100),
+    experience INT
+);
+
+
+Display details of professors who are either ME or MTech and with at least 8 years of experience.
+
+SELECT * FROM PROFESSOR
+WHERE (qualification = 'ME' OR qualification = 'MTech') AND experience >= 8;
+
+
+Count number of students appearing for the subject ‘DBMS’.
+
+SELECT COUNT(*) FROM STUDENT
+WHERE subject = 'DBMS';
+
+
+Find the professor who teaches course ‘Computer Programming’.
+
+SELECT P.* FROM PROFESSOR P
+JOIN RESERVES R ON P.prof_code = R.prof_code
+WHERE R.course = 'Computer Programming';

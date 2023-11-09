@@ -1,0 +1,71 @@
+1. Create the following database schema:
+	STUDENT (stu_no, name, date_of_birth)
+	SUBJECT (sub_code, sub_name)  
+	ENROLLMENT (stu_no, sub_code, marks) 
+2. Find the name of the student with highest marks.
+3. Display names of the students according to their subjects.
+4. Create a view to display student name and subject name where marks obtained are above 75.
+5. Display records of students where date of birth is null.
+
+
+Creating the database schema:
+CREATE TABLE STUDENT (
+    stu_no INT PRIMARY KEY,
+    name VARCHAR(100),
+    date_of_birth DATE
+);
+
+CREATE TABLE SUBJECT (
+    sub_code INT PRIMARY KEY,
+    sub_name VARCHAR(100)
+);
+
+CREATE TABLE ENROLLMENT (
+    stu_no INT,
+    sub_code INT,
+    marks INT,
+    FOREIGN KEY (stu_no) REFERENCES STUDENT(stu_no),
+    FOREIGN KEY (sub_code) REFERENCES SUBJECT(sub_code)
+);
+
+
+Finding the name of the student with highest marks:
+
+SELECT TOP 1 S.name, E.marks
+FROM STUDENT S
+JOIN ENROLLMENT E ON S.stu_no = E.stu_no
+ORDER BY E.marks DESC;
+
+ 
+
+
+Display names of the students according to their subjects:
+
+SELECT S.name, SS.sub_name
+FROM STUDENT S
+JOIN (
+    SELECT E.stu_no, S.sub_name
+    FROM ENROLLMENT E
+    JOIN SUBJECT S ON E.sub_code = S.sub_code
+) SS ON S.stu_no = SS.stu_no
+ORDER BY SS.sub_name;
+
+
+Creating a view to display student name and subject name where marks obtained are above 75:
+
+CREATE VIEW top_students AS
+SELECT S.name, SS.sub_name
+FROM STUDENT S
+JOIN (
+    SELECT E.stu_no, S.sub_name
+    FROM ENROLLMENT E
+    JOIN SUBJECT S ON E.sub_code = S.sub_code
+    WHERE E.marks > 75
+) SS ON S.stu_no = SS.stu_no;
+
+
+Display records of students where date of birth is null:
+
+SELECT * FROM STUDENT
+WHERE date_of_birth IS NULL;
+Please r
